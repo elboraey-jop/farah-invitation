@@ -50,17 +50,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .hero-flower { position: absolute; z-index: -1; width: 250px; height: 350px; background: url('/assets/decor/floral-bouquet.png') center/contain no-repeat; opacity: .42; mix-blend-mode: multiply; }.hero-flower--left { left: -150px; bottom: -96px; transform: rotate(-22deg); }.hero-flower--right { right: -166px; top: -40px; transform: rotate(142deg); }.hero-orbit { position: absolute; z-index: -1; border: 1px solid rgba(189,150,90,.35); border-radius: 50%; }.hero-orbit--one { width: 400px; height: 400px; left: 50%; top: 50%; transform: translate(-50%, -50%); }.hero-orbit--two { width: 520px; height: 520px; left: 50%; top: 50%; transform: translate(-50%, -50%); border-style: dashed; opacity: .45; }.hero-side-note { position: absolute; right: -45px; bottom: 78px; margin: 0; color: rgba(111,38,56,.55); font-size: 8px; letter-spacing: .2em; text-transform: uppercase; transform: rotate(-90deg); }
 
 /* Framed opening section */
-.invitation-hero--framed { min-height: auto; padding: 36px 16px 68px; background: radial-gradient(circle at 50% 24%, rgba(255,255,255,.96), rgba(247,241,233,.88) 58%, rgba(234,217,203,.95) 100%); }
+.invitation-hero--framed { min-height: calc(100svh - 66px); padding: 36px 16px; background: radial-gradient(circle at 50% 24%, rgba(255,255,255,.96), rgba(247,241,233,.88) 58%, rgba(234,217,203,.95) 100%); }
 .invitation-hero--framed::after { content: ''; position: absolute; right: 0; bottom: -2px; z-index: 0; width: 100%; height: 342px; background: url('/assets/decor/gallery-continuation-cutout.png') top right/100% auto no-repeat; opacity: .12; mix-blend-mode: multiply; transform: scaleY(-1); transform-origin: center; pointer-events: none; }
-.invitation-hero--framed .hero-content { width: min(100%, 470px); }
+.invitation-hero--framed .hero-content { display: grid; justify-items: center; width: min(100%, 470px); transform: translateY(12px); }
 .invitation-hero--framed .section-label { position: relative; z-index: 3; margin-bottom: 13px; }
-.hero-frame-wrap { position: relative; width: min(100%, 430px); margin: 0 auto; }
+.hero-frame-wrap { position: relative; width: min(88%, 380px); margin: 0 auto; }
 .hero-frame { display: block; width: 100%; height: auto; filter: drop-shadow(0 18px 20px rgba(92,49,42,.08)); }
 .hero-framed-copy { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 9% 17% 6%; text-align: center; }
 .hero-framed-copy .hero-names { margin: 0; font-size: clamp(52px, 17vw, 82px); line-height: .76; }
 .hero-framed-copy .hero-names i { margin: 12px 0 10px; font-size: .4em; }
 .hero-framed-copy .hero-message { max-width: 235px; margin: 24px auto 0; font: 500 13px/1.65 'Cormorant Garamond', serif; }
 .invitation-hero--framed .hero-flower { display: none; }
+
+@media (max-width: 719px) {
+  .invitation-hero--framed .section-label { top: -42px; }
+  .invitation-hero--framed .hero-framed-copy { padding: 4% 17% 12%; }
+}
 
 /* Details */
 .details-section, .moments-section, .venue-section, .wishes-section { position: relative; padding: 88px 20px; }.details-section { background: var(--paper-bright); overflow: hidden; }.details-section::before { content: ''; position: absolute; inset: 12px; border: 1px solid rgba(189,150,90,.35); pointer-events: none; }.section-intro { position: relative; z-index: 1; max-width: 480px; }.section-intro h3, .venue-card__copy h3, .wishes-intro h3 { margin: 13px 0 0; color: var(--wine); font: 600 clamp(49px, 15vw, 78px)/.8 'Cormorant Garamond', serif; letter-spacing: -.06em; }.section-intro h3 i, .venue-card__copy h3 i, .wishes-intro h3 i, .countdown-section h3 i { color: var(--wine-soft); font-style: italic; font-weight: 500; }.section-intro > p:last-child { max-width: 295px; margin: 22px 0 0; color: var(--muted); font-size: 13px; line-height: 1.75; }.details-showcase { position: relative; z-index: 1; display: grid; gap: 48px; margin-top: 54px; }.date-feature { position: relative; display: grid; place-items: center; align-content: center; min-height: 250px; padding: 32px; border: 1px solid var(--wine); color: var(--wine); text-align: center; box-shadow: 15px 15px 0 rgba(189,150,90,.14); }.date-feature::before, .date-feature::after { content: '✦'; position: absolute; color: var(--gold); font-size: 14px; }.date-feature::before { top: 12px; left: 14px; }.date-feature::after { right: 14px; bottom: 12px; }.date-feature i { position: absolute; inset: 7px; border: 1px solid rgba(111,38,56,.15); }.date-feature span, .date-feature small { position: relative; z-index: 1; color: var(--gold); font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }.date-feature strong { position: relative; z-index: 1; margin: 10px 0 5px; font: 600 102px/.7 'Cormorant Garamond', serif; letter-spacing: -.08em; }.event-facts { display: grid; gap: 0; }.event-facts article { display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: start; padding: 20px 0; border-bottom: 1px solid var(--line); }.event-facts article:first-child { border-top: 1px solid var(--line); }.event-facts article > span { color: var(--gold); font: 500 15px 'Cormorant Garamond', serif; }.event-facts div { display: grid; gap: 6px; }.event-facts small { color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .17em; text-transform: uppercase; }.event-facts strong { color: var(--ink); font: 500 25px/1 'Cormorant Garamond', serif; }
@@ -195,7 +200,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 @media (max-width: 719px) {
-  .moments-section { padding-top: 38px; padding-bottom: 56px; }
+  .moments-section { padding-top: 66px; padding-bottom: 56px; }
   .moments-grid { margin-top: 32px; }
   .details-section { padding-bottom: 28px; }
 }

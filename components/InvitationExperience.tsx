@@ -6,7 +6,7 @@ import type { invitation } from "@/lib/invitation";
 type InvitationData = typeof invitation;
 
 const immediateDecorationAssets = [
-  "/assets/decor/frame-1-cutout.png",
+  "/assets/decor/frame-1-ribbon-cutout-hq.png",
   "/assets/decor/gallery-continuation-cutout.png",
   "/assets/decor/location-wishes-divider.png",
   "/assets/music/music-disc.png",
@@ -220,7 +220,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
           <div className="hero-flower hero-flower--right" aria-hidden="true" />
           <div className="hero-content">
             <p className="section-label opening-sequence opening-sequence--label">Welcome to our wedding</p>
-            <div className="hero-frame-wrap opening-sequence opening-sequence--frame"><img className="hero-frame" src="/assets/decor/frame-1-cutout.png" alt="" aria-hidden="true" loading="eager" decoding="async" /></div>
+            <div className="hero-frame-wrap opening-sequence opening-sequence--frame"><img className="hero-frame" src="/assets/decor/frame-1-ribbon-cutout-hq.png" alt="" aria-hidden="true" loading="eager" decoding="async" /></div>
             <div className="hero-framed-copy opening-sequence opening-sequence--names">
               <h2 className="hero-names"><span>{invitation.bride}</span><i>&amp;</i><span>{invitation.groom}</span></h2>
             </div>
