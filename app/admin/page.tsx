@@ -45,6 +45,7 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<InboxTab>("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
+  const [activeWish, setActiveWish] = useState<Wish | null>(null);
 
   useEffect(() => {
     if (!supabase) {
@@ -133,6 +134,20 @@ export default function AdminPage() {
     if (user) void loadWishes();
   }, [loadWishes, user]);
 
+  useEffect(() => {
+    if (!activeWish) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActiveWish(null);
+    };
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [activeWish]);
+
   const counts = useMemo(() => wishes.reduce((summary, wish) => {
     summary[wish.status] += 1;
     return summary;
@@ -185,6 +200,7 @@ export default function AdminPage() {
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || "Unable to update wishes.");
       setSelectedIds((current) => current.filter((id) => !ids.includes(id)));
+      setActiveWish((current) => current && ids.includes(current.id) ? { ...current, status } : current);
       await loadWishes();
     } catch (updateError) {
       setError(updateError instanceof Error ? updateError.message : "Unable to update wishes.");
@@ -248,9 +264,10 @@ export default function AdminPage() {
 
         <div className="admin-list-head"><label className="admin-check"><input type="checkbox" checked={allVisibleSelected} onChange={toggleSelectVisible} disabled={filteredWishes.length === 0} /><span /></label><span>{hasLoadedWishes ? `${filteredWishes.length} ${filteredWishes.length === 1 ? "message" : "messages"}` : "Inbox"}</span>{selectedVisibleCount > 0 && <small>{selectedVisibleCount} on screen selected</small>}</div>
 
-        {!hasLoadedWishes && loadingWishes ? <div className="admin-skeletons" aria-label="Loading inbox"><span /><span /><span /></div> : !hasLoadedWishes ? <div className="admin-empty"><span className="admin-empty__mark">✦</span><h3>Your inbox is getting ready</h3><p>We’re loading your private guestbook.</p></div> : filteredWishes.length === 0 ? <div className="admin-empty"><span className="admin-empty__mark">{searchTerm ? "⌕" : "✦"}</span><h3>{searchTerm ? "No matches found" : activeTab === "all" ? "No wishes have arrived yet" : `No ${tabLabels[activeTab].toLowerCase()} messages`}</h3><p>{searchTerm ? "Try a different name or phrase." : "Guest messages will appear here as they come in."}</p>{searchTerm && <button className="admin-empty__action" type="button" onClick={() => setSearchTerm("")}>Clear search</button>}</div> : <div className="admin-wish-list">{filteredWishes.map((wish) => { const isUpdating = updatingIds.includes(wish.id); return <article className={`admin-wish admin-wish--${wish.status}`} key={wish.id}><label className="admin-check admin-wish__check"><input type="checkbox" checked={selectedIds.includes(wish.id)} onChange={() => toggleSelection(wish.id)} /><span /></label><div className="admin-wish__avatar">{getInitials(wish.sender_name)}</div><div className="admin-wish__content"><div className="admin-wish__meta"><div><strong>{wish.sender_name}</strong><span className={`admin-status admin-status--${wish.status}`}>{statusLabels[wish.status]}</span></div><time dateTime={wish.created_at}>{formatWishDate(wish.created_at)}</time></div><p>{wish.message}</p><div className="admin-wish__footer"><span>Guest message</span><div className="admin-wish__actions">{wish.status !== "read" && <button type="button" onClick={() => void updateWishes([wish.id], "read")} disabled={isUpdating}>{isUpdating ? "Updating…" : "Mark read"}</button>}{wish.status === "read" && <button type="button" onClick={() => void updateWishes([wish.id], "unread")} disabled={isUpdating}>{isUpdating ? "Updating…" : "Mark unread"}</button>}{wish.status === "archived" ? <button type="button" onClick={() => void updateWishes([wish.id], "read")} disabled={isUpdating}>Restore</button> : <button type="button" onClick={() => void updateWishes([wish.id], "archived")} disabled={isUpdating}>Archive</button>}</div></div></div></article>; })}</div>}
+        {!hasLoadedWishes && loadingWishes ? <div className="admin-skeletons" aria-label="Loading inbox"><span /><span /><span /></div> : !hasLoadedWishes ? <div className="admin-empty"><span className="admin-empty__mark">✦</span><h3>Your inbox is getting ready</h3><p>We’re loading your private guestbook.</p></div> : filteredWishes.length === 0 ? <div className="admin-empty"><span className="admin-empty__mark">{searchTerm ? "⌕" : "✦"}</span><h3>{searchTerm ? "No matches found" : activeTab === "all" ? "No wishes have arrived yet" : `No ${tabLabels[activeTab].toLowerCase()} messages`}</h3><p>{searchTerm ? "Try a different name or phrase." : "Guest messages will appear here as they come in."}</p>{searchTerm && <button className="admin-empty__action" type="button" onClick={() => setSearchTerm("")}>Clear search</button>}</div> : <div className="admin-wish-list">{filteredWishes.map((wish) => { const isUpdating = updatingIds.includes(wish.id); return <article className={`admin-wish admin-wish--${wish.status}`} key={wish.id} role="button" tabIndex={0} onClick={(event) => { const target = event.target as HTMLElement; if (!target.closest("button, input, label, a")) setActiveWish(wish); }} onKeyDown={(event) => { if ((event.key === "Enter" || event.key === " ") && event.target === event.currentTarget) { event.preventDefault(); setActiveWish(wish); } }} aria-label={`Open message from ${wish.sender_name}`}><label className="admin-check admin-wish__check"><input type="checkbox" checked={selectedIds.includes(wish.id)} onChange={() => toggleSelection(wish.id)} /><span /></label><div className="admin-wish__avatar">{getInitials(wish.sender_name)}</div><div className="admin-wish__content"><div className="admin-wish__meta"><div><strong>{wish.sender_name}</strong><span className={`admin-status admin-status--${wish.status}`}>{statusLabels[wish.status]}</span></div><time dateTime={wish.created_at}>{formatWishDate(wish.created_at)}</time></div><p>{wish.message}</p><div className="admin-wish__footer"><div className="admin-wish__actions">{wish.status !== "read" && <button type="button" onClick={() => void updateWishes([wish.id], "read")} disabled={isUpdating}>{isUpdating ? "Updating…" : "Mark read"}</button>}{wish.status === "read" && <button type="button" onClick={() => void updateWishes([wish.id], "unread")} disabled={isUpdating}>{isUpdating ? "Updating…" : "Mark unread"}</button>}{wish.status === "archived" ? <button type="button" onClick={() => void updateWishes([wish.id], "read")} disabled={isUpdating}>Restore</button> : <button type="button" onClick={() => void updateWishes([wish.id], "archived")} disabled={isUpdating}>Archive</button>}</div></div></div></article>; })}</div>}
       </section>
       <footer className="admin-footer"><span>Farah &amp; Karim · Private guestbook</span><span>Only the admin can see these messages</span></footer>
     </div>
+    {activeWish && <div className="admin-modal-backdrop" role="presentation" onClick={(event) => { if (event.target === event.currentTarget) setActiveWish(null); }}><section className="admin-modal" role="dialog" aria-modal="true" aria-labelledby="wish-modal-title"><div className="admin-modal__topline"><span>Private wish</span><button className="admin-modal__close" type="button" onClick={() => setActiveWish(null)} aria-label="Close message">×</button></div><div className="admin-modal__identity"><div className="admin-wish__avatar">{getInitials(activeWish.sender_name)}</div><div><p className="eyebrow">A message from</p><h2 id="wish-modal-title">{activeWish.sender_name}</h2></div></div><div className="admin-modal__meta"><span className={`admin-status admin-status--${activeWish.status}`}>{statusLabels[activeWish.status]}</span><time dateTime={activeWish.created_at}>{formatWishDate(activeWish.created_at)}</time></div><blockquote>{activeWish.message}</blockquote><div className="admin-modal__footer"><span>Farah &amp; Karim · Guestbook</span><div className="admin-wish__actions">{activeWish.status !== "read" && <button type="button" onClick={() => void updateWishes([activeWish.id], "read")} disabled={updatingIds.includes(activeWish.id)}>Mark read</button>}{activeWish.status === "read" && <button type="button" onClick={() => void updateWishes([activeWish.id], "unread")} disabled={updatingIds.includes(activeWish.id)}>Mark unread</button>}{activeWish.status === "archived" ? <button type="button" onClick={() => void updateWishes([activeWish.id], "read")} disabled={updatingIds.includes(activeWish.id)}>Restore</button> : <button type="button" onClick={() => void updateWishes([activeWish.id], "archived")} disabled={updatingIds.includes(activeWish.id)}>Archive</button>}</div></div></section></div>}
   </main>;
 }
