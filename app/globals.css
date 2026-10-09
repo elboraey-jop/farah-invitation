@@ -487,3 +487,77 @@ body:has(.admin-dashboard), body:has(.admin-auth-shell) { overflow-x: hidden; }
 @media (max-width: 520px) { .admin-login, .admin-panel { padding: 25px 20px; }.admin-hero h1 { font-size: clamp(45px, 14vw, 66px); }.admin-inbox { padding: 19px 14px; border-radius: 17px; }.admin-stats { gap: 8px; }.admin-stat { min-height: 105px; padding: 13px; gap: 4px 8px; }.admin-stat__icon { width: 28px; height: 28px; }.admin-stat strong { font-size: 27px; }.admin-stat small { font-size: 9px; }.admin-wish { grid-template-columns: 19px 36px minmax(0, 1fr); gap: 9px; padding: 14px 10px; }.admin-wish__avatar { width: 36px; height: 36px; font-size: 13px; }.admin-wish__meta { align-items: flex-start; flex-direction: column; gap: 6px; }.admin-wish__footer { align-items: flex-start; flex-direction: column; gap: 10px; }.admin-wish__actions { gap: 14px; }.admin-bulkbar > div { width: 100%; }.admin-bulkbar > div button { flex: 1; }.admin-bulkbar .admin-bulkbar__clear { margin-left: 0; } }
 .admin-wish { cursor: pointer; }.admin-wish:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }.admin-wish__footer { justify-content: flex-end; }.admin-modal-backdrop { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 22px; background: rgba(48,22,29,.48); backdrop-filter: blur(12px); animation: admin-modal-fade .22s ease both; }.admin-modal { width: min(100%, 650px); max-height: min(760px, calc(100svh - 44px)); overflow: auto; padding: clamp(24px, 5vw, 44px); border: 1px solid rgba(255,253,249,.65); border-radius: 26px; background: linear-gradient(145deg, #fffdfa 0%, #f7eee7 100%); box-shadow: 0 28px 90px rgba(33,13,20,.3); animation: admin-modal-in .32s cubic-bezier(.16,1,.3,1) both; }.admin-modal__topline, .admin-modal__meta, .admin-modal__footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; }.admin-modal__topline { color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }.admin-modal__close { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid rgba(111,38,56,.18); border-radius: 50%; background: rgba(255,255,255,.55); color: var(--wine); cursor: pointer; font-size: 25px; line-height: 1; transition: background .2s ease, transform .2s ease; }.admin-modal__close:hover { background: #fff; transform: rotate(90deg); }.admin-modal__identity { display: flex; align-items: center; gap: 15px; margin-top: 38px; }.admin-modal__identity .admin-wish__avatar { width: 56px; height: 56px; border-radius: 18px; font-size: 20px; }.admin-modal__identity .eyebrow { margin: 0 0 5px; }.admin-modal__identity h2 { margin: 0; color: var(--wine); font: 600 clamp(35px, 6vw, 54px)/.9 var(--font-cormorant), serif; }.admin-modal__meta { margin-top: 26px; padding: 12px 0; border-top: 1px solid rgba(111,38,56,.12); border-bottom: 1px solid rgba(111,38,56,.12); }.admin-modal__meta time { color: var(--muted); font-size: 11px; }.admin-modal blockquote { position: relative; margin: 28px 0; padding: 26px 25px 25px 30px; border-left: 3px solid var(--gold); border-radius: 0 16px 16px 0; background: rgba(255,255,255,.6); color: var(--ink); font: 400 clamp(20px, 3vw, 28px)/1.5 var(--font-cormorant), serif; }.admin-modal blockquote::before { content: '“'; position: absolute; top: -16px; left: 11px; color: rgba(189,150,90,.42); font: 600 68px/1 var(--font-cormorant), serif; }.admin-modal__footer { padding-top: 5px; color: #a18e88; font-size: 10px; }.admin-modal__footer .admin-wish__actions { gap: 15px; }.admin-modal__footer .admin-wish__actions button { font-size: 12px; }.admin-modal-backdrop button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; } @keyframes admin-modal-fade { from { opacity: 0; } to { opacity: 1; } } @keyframes admin-modal-in { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (max-width: 520px) { .admin-auth-shell { padding: 18px 14px; }.admin-login { width: min(100%, 420px); }.admin-modal-backdrop { align-items: center; padding: 16px; }.admin-modal { max-height: calc(100svh - 32px); border-radius: 22px; padding: 23px 20px 20px; }.admin-modal__identity { margin-top: 27px; }.admin-modal__footer { align-items: flex-start; flex-direction: column; }.admin-modal__footer .admin-wish__actions { width: 100%; justify-content: space-between; } }
+
+/* Mobile-first admin polish */
+@media (max-width: 760px) {
+  .admin-dashboard { padding: 0 14px 24px; }
+  .admin-container { width: 100%; }
+  .admin-topbar { min-height: 0; padding: 16px 0; }
+  .admin-brand strong { font-size: 21px; }
+  .admin-user { min-width: 0; gap: 9px; }
+  .admin-user__email { min-width: 0; max-width: min(55vw, 220px); }
+  .admin-hero { gap: 22px; padding: 39px 0 27px; }
+  .admin-hero h1 { max-width: 520px; margin-top: 8px; font-size: clamp(45px, 12.5vw, 68px); }
+  .admin-hero p:last-child { max-width: 430px; font-size: 13px; }
+  .admin-refresh { width: 100%; min-height: 50px; }
+  .admin-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .admin-stat { min-height: 108px; padding: 14px; gap: 4px 9px; }
+  .admin-stat__icon { width: 30px; height: 30px; }
+  .admin-stat strong { font-size: 29px; }
+  .admin-stat small { line-height: 1.25; }
+  .admin-inbox { margin-top: 18px; padding: 20px 14px; border-radius: 18px; }
+  .admin-inbox h2 { font-size: clamp(36px, 10vw, 48px); }
+  .admin-inbox__secure { font-size: 9px; }
+  .admin-tabs { margin: 24px -14px 17px; padding: 0 14px 1px; scrollbar-width: none; }
+  .admin-tabs::-webkit-scrollbar { display: none; }
+  .admin-tab { min-height: 38px; padding-right: 10px; padding-left: 10px; padding-bottom: 12px; }
+  .admin-toolbar { gap: 10px; margin-bottom: 13px; }
+  .admin-search { width: 100%; max-width: none; min-height: 48px; }
+  .admin-sort { width: 100%; min-height: 42px; }
+  .admin-sort select { min-height: 44px; }
+  .admin-list-head { min-height: 42px; }
+  .admin-bulkbar { align-items: flex-start; padding: 12px; }
+  .admin-bulkbar > span { width: 100%; }
+  .admin-bulkbar > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+  .admin-bulkbar > div button { min-height: 36px; padding: 7px 5px; }
+  .admin-bulkbar .admin-bulkbar__clear { margin-left: 0; padding-left: 0; }
+  .admin-wish { grid-template-columns: 19px 38px minmax(0, 1fr); gap: 10px; padding: 15px 11px; }
+  .admin-wish__avatar { width: 38px; height: 38px; }
+  .admin-wish__meta { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .admin-wish__meta > div { gap: 6px; }
+  .admin-wish__meta strong { max-width: 100%; overflow-wrap: anywhere; }
+  .admin-wish__meta time { font-size: 10px; }
+  .admin-wish__content > p { margin: 10px 0 14px; font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; }
+  .admin-wish__footer { align-items: flex-start; flex-direction: column; gap: 11px; }
+  .admin-wish__actions { flex-wrap: wrap; gap: 8px 15px; }
+  .admin-wish__actions button { min-height: 30px; font-size: 12px; }
+  .admin-footer { padding-top: 20px; line-height: 1.5; }
+}
+
+@media (max-width: 420px) {
+  .admin-dashboard { padding-right: 10px; padding-left: 10px; }
+  .admin-topbar { gap: 12px; }
+  .admin-user { width: 100%; justify-content: space-between; }
+  .admin-user__email { max-width: 62vw; }
+  .admin-hero { padding-top: 31px; }
+  .admin-hero h1 { font-size: clamp(42px, 13.5vw, 59px); }
+  .admin-stats { gap: 7px; }
+  .admin-stat { min-height: 100px; padding: 12px 10px; gap: 3px 7px; }
+  .admin-stat__icon { width: 27px; height: 27px; font-size: 14px; }
+  .admin-stat > div span { font-size: 10px; }
+  .admin-stat strong { font-size: 26px; }
+  .admin-stat small { font-size: 8px; }
+  .admin-inbox { padding: 18px 11px; }
+  .admin-tabs { margin-right: -11px; margin-left: -11px; padding-right: 11px; padding-left: 11px; }
+  .admin-tab { padding-right: 8px; padding-left: 8px; font-size: 11px; }
+  .admin-tab b { min-width: 19px; height: 19px; }
+  .admin-wish { grid-template-columns: 18px 34px minmax(0, 1fr); gap: 8px; padding: 13px 8px; }
+  .admin-wish__avatar { width: 34px; height: 34px; font-size: 12px; }
+  .admin-wish__meta strong { font-size: 13px; }
+  .admin-wish__content > p { font-size: 13px; }
+  .admin-modal-backdrop { padding: 10px; }
+  .admin-modal { max-height: calc(100svh - 20px); padding: 21px 17px 18px; }
+  .admin-modal__identity { gap: 11px; margin-top: 23px; }
+  .admin-modal__identity .admin-wish__avatar { width: 48px; height: 48px; font-size: 17px; }
+  .admin-modal blockquote { margin: 22px 0; padding: 22px 17px 21px 23px; font-size: 22px; }
+}
