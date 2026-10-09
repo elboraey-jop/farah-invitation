@@ -694,7 +694,17 @@ html[dir="rtl"] .venue-card__copy h3 i {
   margin-top: .14em;
 }
 html[dir="rtl"] .venue-card__copy h3 i {
-  margin-top: .26em;
+  margin-top: .4em;
+}
+html[dir="rtl"] .wishes-intro h3 i {
+  display: block;
+  width: 100%;
+  margin-top: .3em;
+  text-align: center;
+}
+html[dir="rtl"] .moments-section .section-intro h3 i {
+  display: inline-block;
+  margin-top: .18em;
 }
 html[dir="rtl"] .hero-framed-copy .hero-names {
   letter-spacing: 0;
@@ -747,6 +757,11 @@ html[dir="rtl"] .venue-card__copy > p:last-of-type {
   margin-right: 0;
   margin-left: 0;
 }
+html[dir="rtl"] .venue-card__copy > p:last-of-type {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}
 html[dir="rtl"] .wishes-intro {
   width: min(100%, 520px);
   text-align: center;
@@ -765,16 +780,16 @@ html[dir="rtl"] .wish-form label {
   justify-items: stretch;
 }
 html[dir="rtl"] .wish-form label > span {
-  text-align: right;
+  text-align: center;
 }
 html[dir="rtl"] .wish-form input,
 html[dir="rtl"] .wish-form textarea {
   direction: rtl;
-  text-align: right;
+  text-align: center;
 }
 html[dir="rtl"] .wish-form input::placeholder,
 html[dir="rtl"] .wish-form textarea::placeholder {
-  text-align: right;
+  text-align: center;
 }
 html[dir="rtl"] .wish-form .button,
 html[dir="rtl"] .form-status {

@@ -58,26 +58,26 @@ const copy = {
     groomName: "كريم",
     nameConnector: "و",
     coverLabel: "حكاية حب تبدأ من هنا",
-    coverIntro: "بصحبة عائلتينا",
+    coverIntro: "ندعوكم إلى حفل زفاف",
     openInvitation: "افتحوا الدعوة",
     welcome: "نرحّب بكم في حفل زفافنا",
     momentsLabel: "لمحة من لحظاتنا",
     momentsTitle: <>لحظات<br /><i>تبقى معنا للأبد.</i></>,
     memory: "ذكرى نُشكّلها معًا",
     receptionInfo: "تفاصيل الحفل",
-    receptionTitle: <>نلتقي في الحفل<br /><i>الذي سيُقام في:</i></>,
+    receptionTitle: <>نلتقي في الحفل<br /><i>الذي سيقام في:</i></>,
     reception: "الحفل",
     countdown: "العدّ التنازلي",
     countdownAria: "العدّ التنازلي حتى موعد الزفاف",
     countdownUnits: ["يوم", "ساعة", "دقيقة", "ثانية"],
     venueLabel: "المكان",
     venueTitle: <>نلتقيكم في<br /><i>قاعة القصر</i></>,
-    venueDescription: "تعالوا إلى المكان الذي تبدأ فيه حكايتنا معًا. لا نطيق انتظار الاحتفال بكم.",
+    venueDescription: "يسعدنا حضوركم لنحتفل معًا ببداية حكايتنا الجميلة.",
     openMaps: "افتحوا الموقع على الخريطة",
     mapAria: "افتحوا موقع قاعة القصر على خرائط جوجل",
     wishesLabel: "رسالة محبّة",
     wishesTitle: <>اتركوا لنا<br /><i>أمنية.</i></>,
-    wishesDescription: "سنحتفظ بكلماتكم بكل خصوصية، لتبقى ذكرى عزيزة علينا.",
+    wishesDescription: "كلماتكم ستبقى ذكرى جميلة نحتفظ بها في قلوبنا.",
     name: "الاسم",
     namePlaceholder: "كيف نتذكّركم؟",
     message: "رسالتكم",
@@ -87,8 +87,8 @@ const copy = {
     sent: "وصلتنا أمنيتكم وستبقى بيننا بكل خصوصية.",
     error: "صندوق الرسائل غير متصل حاليًا. حاولوا مرة أخرى لاحقًا.",
     promiseLabel: "كلمة منّا",
-    promiseQuote: "«أجمل ما نتمسّك به في الحياة هو أن نكون معًا.»",
-    promiseDescription: "يسعدنا أن تشاركونا الضحكات والرقص وكل لحظة لا تُنسى.",
+    promiseQuote: "«أجمل ما في الحياة أن نعيشها معًا.»",
+    promiseDescription: "نتمنى أن تشاركونا فرحتنا وضحكاتنا وكل لحظة جميلة في يومنا.",
     time: "٨:٠٠ مساءً",
     languageButton: "EN",
     languageAria: "التبديل إلى الإنجليزية",
@@ -341,7 +341,6 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
             <p className="section-label">{activeCopy.receptionInfo}</p>
             <h3>{activeCopy.receptionTitle}</h3>
             <strong className="reception-venue">{activeCopy.venueName}</strong>
-            <p className="reception-time">{activeCopy.time}</p>
             <div className="reception-date-row">
               <span>{calendar.weekdayName}</span><b>{formatNumber(calendar.selectedDay, language)}</b><span>{calendar.monthName}</span>
             </div>
