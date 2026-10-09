@@ -16,7 +16,7 @@ Open `http://localhost:3000`.
 1. Create a Supabase project.
 2. Run `supabase/schema.sql` in the SQL editor.
 3. Copy `.env.example` to `.env.local`.
-4. Add the Supabase URL, anon key, service-role key, and the admin email.
+4. Add the Supabase URL, publishable key, secret key, and the admin email.
 5. Create the admin user in Supabase Auth using that email.
 
 The public invitation accepts a name and private wish. Wishes are never selected by the public page; they are visible only through `/admin` after the configured admin signs in.
