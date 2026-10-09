@@ -32,17 +32,18 @@ export async function PATCH(request: Request) {
   const supabase = getSupabaseAdmin();
   if (!supabase) return NextResponse.json({ error: "Admin backend is not configured yet." }, { status: 503 });
 
-  let body: { id?: string; status?: "unread" | "read" | "archived" };
+  let body: { id?: string; ids?: string[]; status?: "unread" | "read" | "archived" };
   try {
-    body = (await request.json()) as { id?: string; status?: "unread" | "read" | "archived" };
+    body = (await request.json()) as { id?: string; ids?: string[]; status?: "unread" | "read" | "archived" };
   } catch {
     return NextResponse.json({ error: "Invalid update." }, { status: 400 });
   }
-  if (!body.id || !body.status || !["unread", "read", "archived"].includes(body.status)) {
+  const ids = Array.from(new Set([...(Array.isArray(body.ids) ? body.ids : []), ...(body.id ? [body.id] : [])])).filter((id) => typeof id === "string" && id.length > 0);
+  if (ids.length === 0 || ids.length > 100 || !body.status || !["unread", "read", "archived"].includes(body.status)) {
     return NextResponse.json({ error: "Invalid update." }, { status: 400 });
   }
 
-  const { error } = await supabase.from("wishes").update({ status: body.status }).eq("id", body.id);
+  const { error } = await supabase.from("wishes").update({ status: body.status }).in("id", ids);
   if (error) return NextResponse.json({ error: "Unable to update wish." }, { status: 500 });
   return NextResponse.json({ ok: true });
 }
