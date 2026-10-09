@@ -5,21 +5,6 @@ import type { invitation } from "@/lib/invitation";
 
 type InvitationData = typeof invitation;
 
-const immediateDecorationAssets = [
-  "/assets/decor/frame-1-ribbon-cutout-hq.png",
-  "/assets/decor/gallery-continuation-cutout.png",
-  "/assets/decor/location-wishes-divider.png",
-  "/assets/music/music-disc.png",
-];
-
-function preloadDecorationAssets(additionalSources: string[] = []) {
-  [...immediateDecorationAssets, ...additionalSources].forEach((source) => {
-    const image = new window.Image();
-    image.decoding = "async";
-    image.src = source;
-  });
-}
-
 function getTimeLeft(target: string) {
   const distance = Math.max(0, new Date(target).getTime() - Date.now());
   return {
@@ -60,35 +45,20 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioObjectUrlRef = useRef<string | null>(null);
   const audioPreparationRef = useRef<Promise<string> | null>(null);
-  const decorationsPreloaded = useRef(false);
-
-  function ensureDecorationAssets() {
-    if (decorationsPreloaded.current) return;
-    decorationsPreloaded.current = true;
-    preloadDecorationAssets(invitation.gallery.slice(0, 2).map((photo) => photo.src));
-  }
-
-  useEffect(() => {
-    ensureDecorationAssets();
-  }, []);
 
   function prepareMusic() {
     if (audioObjectUrlRef.current) return Promise.resolve(audioObjectUrlRef.current);
     if (audioPreparationRef.current) return audioPreparationRef.current;
 
     const preparation = fetch("/api/music", {
-      method: "POST",
-      cache: "no-store",
+      cache: "force-cache",
     })
       .then((response) => {
         if (!response.ok) throw new Error("Unable to load music");
-        return response.json() as Promise<{ data: string; mimeType: string }>;
+        return response.blob();
       })
-      .then(({ data, mimeType }) => {
-        const binary = atob(data);
-        const bytes = new Uint8Array(binary.length);
-        for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
-        const objectUrl = URL.createObjectURL(new Blob([bytes], { type: mimeType }));
+      .then((blob) => {
+        const objectUrl = URL.createObjectURL(blob);
         audioObjectUrlRef.current = objectUrl;
         if (audioRef.current) audioRef.current.src = objectUrl;
         return objectUrl;
@@ -167,7 +137,6 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
   function openInvitation() {
     if (opened) return;
     void startMusic();
-    ensureDecorationAssets();
     setOpened(true);
     window.setTimeout(() => {
       setCoverVisible(false);
@@ -201,7 +170,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
         <section className={`cover ${opened ? "cover--opened" : ""}`} aria-label="Wedding invitation cover">
           <div className="cover__glow" aria-hidden="true" />
           <div className="cover__sheet">
-            <img className="cover__paper" src="/assets/backgrounds/cover-paper.png" alt="" aria-hidden="true" loading="eager" decoding="async" />
+            <img className="cover__paper" src="/assets/backgrounds/cover-paper.webp" alt="" aria-hidden="true" loading="eager" decoding="async" />
             <div className="cover__copy">
               <p className="eyebrow">A celebration of love</p>
               <p className="cover__intro">Together with their families</p>
@@ -220,7 +189,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
           <div className="hero-flower hero-flower--right" aria-hidden="true" />
           <div className="hero-content">
             <p className="section-label opening-sequence opening-sequence--label">Welcome to our wedding</p>
-            <div className="hero-frame-wrap opening-sequence opening-sequence--frame"><img className="hero-frame" src="/assets/decor/frame-1-ribbon-cutout-hq.png" alt="" aria-hidden="true" loading="eager" decoding="async" /></div>
+            <div className="hero-frame-wrap opening-sequence opening-sequence--frame"><img className="hero-frame" src="/assets/decor/frame-1-ribbon-cutout-hq.webp" alt="" aria-hidden="true" loading="eager" decoding="async" /></div>
             <div className="hero-framed-copy opening-sequence opening-sequence--names">
               <h2 className="hero-names"><span>{invitation.bride}</span><i>&amp;</i><span>{invitation.groom}</span></h2>
             </div>
@@ -234,7 +203,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
             <h3>Moments to<br /><i>keep forever.</i></h3>
           </div>
           <div className="moments-grid opening-sequence opening-sequence--moments-grid">
-            {invitation.gallery.slice(0, 2).map((photo, index) => <figure className="moment-card" key={photo.src}><img src={photo.src} alt={photo.alt} loading="eager" fetchPriority="high" decoding="async" /><figcaption><span>0{index + 1}</span> A memory in the making</figcaption></figure>)}
+            {invitation.gallery.slice(0, 2).map((photo, index) => <figure className="moment-card" key={photo.src}><img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" /><figcaption><span>0{index + 1}</span> A memory in the making</figcaption></figure>)}
           </div>
         </section>
         </div>
@@ -268,13 +237,13 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
         </section>
 
         <div className="floral-section-divider" aria-hidden="true">
-          <img src="/assets/decor/location-wishes-divider.png" alt="" loading="lazy" decoding="async" />
+          <img src="/assets/decor/location-wishes-divider.webp" alt="" loading="lazy" decoding="async" />
         </div>
 
         <section id="venue" className="venue-section" data-reveal="up">
           <div className="venue-section__frame" aria-hidden="true" />
           <div className="venue-card">
-            <div className="venue-card__art"><a className="venue-card__map-link" href={invitation.venueUrl} target="_blank" rel="noreferrer" aria-label="Open the Qasr Hall location in Google Maps"><img className="venue-card__map" src="/assets/backgrounds/venue-map.png" alt="Map showing the Qasr Hall location" loading="lazy" decoding="async" /></a></div>
+            <div className="venue-card__art"><a className="venue-card__map-link" href={invitation.venueUrl} target="_blank" rel="noreferrer" aria-label="Open the Qasr Hall location in Google Maps"><img className="venue-card__map" src="/assets/backgrounds/venue-map.webp" alt="Map showing the Qasr Hall location" loading="lazy" decoding="async" /></a></div>
             <div className="venue-card__copy">
               <p className="section-label">The setting</p>
               <h3>Meet us at<br /><i>{invitation.venue}</i></h3>
@@ -285,7 +254,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
         </section>
 
         <div className="floral-section-divider" aria-hidden="true">
-          <img src="/assets/decor/location-wishes-divider.png" alt="" loading="lazy" decoding="async" />
+          <img src="/assets/decor/location-wishes-divider.webp" alt="" loading="lazy" decoding="async" />
         </div>
 
         <section id="wishes" className="wishes-section" data-reveal="up">

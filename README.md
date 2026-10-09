@@ -24,7 +24,7 @@ The public invitation accepts a name and private wish. Wishes are never selected
 ## Replace temporary assets
 
 - Couple photos: replace the four SVGs in `public/assets/placeholders/` or update `lib/invitation.ts`.
-- Music: replace `public/assets/music/placeholder.wav` and keep the path in `lib/invitation.ts`, or update the path.
+- Music: replace `public/assets/music/farh-music.mp3`; it is served through `/api/music` and cached after the first load.
 - Colors, fonts, and spacing: edit the CSS variables at the top of `app/globals.css`.
 - Text and wedding data: edit `lib/invitation.ts` and the section copy in `components/InvitationExperience.tsx`.
 
