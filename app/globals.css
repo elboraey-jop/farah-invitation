@@ -461,6 +461,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } [data-reveal], .opening-sequence, .opening-sections.is-visible .moment-card { opacity: 1; transform: none; animation: none !important; } .cover__copy > *, .cover__open-button { opacity: 1; animation: none !important; } .cover__open-button { transform: translateY(22px); } }
 
 /* Premium private inbox */
+.admin-dashboard, .admin-auth-shell { min-height: 100dvh; }
+html:has(.admin-dashboard), body:has(.admin-dashboard), html:has(.admin-auth-shell), body:has(.admin-auth-shell) { background: #f7f1e9; }
+body:has(.admin-dashboard), body:has(.admin-auth-shell) { overflow-x: hidden; }
 .admin-dashboard { position: relative; overflow: hidden; padding: 0 22px 34px; background: radial-gradient(circle at 10% 2%, rgba(189,150,90,.16), transparent 28%), linear-gradient(145deg, #f7f1e9 0%, #fdfaf6 48%, #f0e2d9 100%); color: var(--ink); }
 .admin-dashboard__glow { position: absolute; top: -180px; right: -120px; width: 480px; height: 480px; border-radius: 50%; background: rgba(111,38,56,.07); filter: blur(2px); pointer-events: none; }
 .admin-container { position: relative; z-index: 1; width: min(100%, 1180px); margin: 0 auto; }
