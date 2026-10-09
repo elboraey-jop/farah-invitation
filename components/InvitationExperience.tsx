@@ -337,6 +337,8 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
         </div>
 
         <section id="details" className="details-section" data-reveal="up">
+          <div className="details-section__floral details-section__floral--right" aria-hidden="true" />
+          <div className="details-section__floral details-section__floral--left" aria-hidden="true" />
           <div className="reception-info">
             <p className="section-label">{activeCopy.receptionInfo}</p>
             <h3>{activeCopy.receptionTitle}</h3>
