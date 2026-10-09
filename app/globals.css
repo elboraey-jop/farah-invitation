@@ -592,3 +592,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .admin-sort::after { display: none; }
 @keyframes admin-sort-menu-in { from { opacity: 0; transform: translateY(-5px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (max-width: 760px) { .admin-sort__trigger { width: 100%; min-width: 0; }.admin-sort__menu { right: 0; left: auto; width: 165px; } }
+
+/* Keep iPhone rubber-band overscroll from exposing an endless-looking page edge. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 760px) {
+    html,
+    body {
+      overflow-x: hidden;
+      overscroll-behavior-y: none;
+    }
+  }
+}
