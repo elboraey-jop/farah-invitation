@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createClient, type User } from "@supabase/supabase-js";
 
 type WishStatus = "unread" | "read" | "archived";
@@ -45,7 +45,9 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<InboxTab>("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
+  const [sortOpen, setSortOpen] = useState(false);
   const [activeWish, setActiveWish] = useState<Wish | null>(null);
+  const sortMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!supabase) {
@@ -147,6 +149,22 @@ export default function AdminPage() {
       document.removeEventListener("keydown", closeOnEscape);
     };
   }, [activeWish]);
+
+  useEffect(() => {
+    if (!sortOpen) return;
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (sortMenuRef.current && !sortMenuRef.current.contains(event.target as Node)) setSortOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSortOpen(false);
+    };
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsideClick);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [sortOpen]);
 
   const counts = useMemo(() => wishes.reduce((summary, wish) => {
     summary[wish.status] += 1;
@@ -258,7 +276,7 @@ export default function AdminPage() {
           {(Object.keys(tabLabels) as InboxTab[]).map((tab) => <button key={tab} className={activeTab === tab ? "admin-tab is-active" : "admin-tab"} type="button" onClick={() => { setActiveTab(tab); setSelectedIds([]); }} aria-pressed={activeTab === tab}><span>{tabLabels[tab]}</span><b>{tab === "all" ? wishes.length : counts[tab]}</b></button>)}
         </nav>
 
-        <div className="admin-toolbar"><label className="admin-search"><span aria-hidden="true">⌕</span><input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search names or messages…" aria-label="Search wishes" />{searchTerm && <button type="button" onClick={() => setSearchTerm("")} aria-label="Clear search">×</button>}</label><label className="admin-sort"><span>Sort by</span><select value={sortOrder} onChange={(event) => setSortOrder(event.target.value as SortOrder)} aria-label="Sort wishes"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label></div>
+        <div className="admin-toolbar"><label className="admin-search"><span aria-hidden="true">⌕</span><input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search names or messages…" aria-label="Search wishes" />{searchTerm && <button type="button" onClick={() => setSearchTerm("")} aria-label="Clear search">×</button>}</label><div className="admin-sort" ref={sortMenuRef}><span>Sort by</span><button className={sortOpen ? "admin-sort__trigger is-open" : "admin-sort__trigger"} type="button" onClick={() => setSortOpen((open) => !open)} aria-haspopup="listbox" aria-expanded={sortOpen}><span>{sortOrder === "newest" ? "Newest first" : "Oldest first"}</span><span className="admin-sort__chevron" aria-hidden="true">⌄</span></button>{sortOpen && <div className="admin-sort__menu" role="listbox" aria-label="Sort wishes"><button className={sortOrder === "newest" ? "is-selected" : ""} type="button" role="option" aria-selected={sortOrder === "newest"} onClick={() => { setSortOrder("newest"); setSortOpen(false); }}><span className="admin-sort__option-mark">✓</span>Newest first</button><button className={sortOrder === "oldest" ? "is-selected" : ""} type="button" role="option" aria-selected={sortOrder === "oldest"} onClick={() => { setSortOrder("oldest"); setSortOpen(false); }}><span className="admin-sort__option-mark">✓</span>Oldest first</button></div>}</div></div>
 
         {selectedIds.length > 0 && <div className="admin-bulkbar"><strong>{selectedIds.length} selected</strong><span>Choose an action</span><div><button type="button" onClick={() => void updateWishes(selectedIds, "read")} disabled={updatingIds.length > 0}>Mark read</button><button type="button" onClick={() => void updateWishes(selectedIds, "unread")} disabled={updatingIds.length > 0}>Mark unread</button><button type="button" onClick={() => void updateWishes(selectedIds, activeTab === "archived" ? "read" : "archived")} disabled={updatingIds.length > 0}>{activeTab === "archived" ? "Restore" : "Archive"}</button></div><button className="admin-bulkbar__clear" type="button" onClick={() => setSelectedIds([])}>Clear</button></div>}
 
