@@ -561,3 +561,24 @@ body:has(.admin-dashboard), body:has(.admin-auth-shell) { overflow-x: hidden; }
   .admin-modal__identity .admin-wish__avatar { width: 48px; height: 48px; font-size: 17px; }
   .admin-modal blockquote { margin: 22px 0; padding: 22px 17px 21px 23px; font-size: 22px; }
 }
+
+@media (max-width: 760px) {
+  .admin-toolbar { align-items: center; flex-direction: row; flex-wrap: nowrap; gap: 9px; }
+  .admin-search { flex: 1 1 auto; min-width: 0; }
+  .admin-search input { min-width: 0; font-size: 12px; }
+  .admin-sort { position: relative; flex: 0 0 clamp(126px, 34vw, 160px); width: auto; min-width: 0; }
+  .admin-sort > span { display: none; }
+  .admin-sort::after { content: '⌄'; position: absolute; top: 50%; right: 12px; z-index: 1; color: var(--wine); pointer-events: none; transform: translateY(-54%); }
+  .admin-sort select { width: 100%; padding: 0 29px 0 11px; appearance: none; -webkit-appearance: none; border-color: rgba(111,38,56,.2); border-radius: 12px; background: linear-gradient(145deg, rgba(255,255,255,.9), rgba(247,238,231,.88)); color: var(--wine); box-shadow: 0 5px 0 rgba(189,150,90,.12); cursor: pointer; font-size: 11px; }
+  .admin-sort select:hover, .admin-sort select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(189,150,90,.12), 0 5px 0 rgba(189,150,90,.12); }
+  .admin-wish__footer { align-items: center; flex-direction: row; justify-content: flex-end; width: 100%; }
+  .admin-wish__actions { justify-content: flex-end; margin-left: auto; }
+  .admin-footer { align-items: center; justify-content: center; text-align: center; }
+}
+
+@media (max-width: 420px) {
+  .admin-sort { flex-basis: 132px; }
+  .admin-search input { font-size: 11px; }
+  .admin-wish__actions { gap: 8px 13px; }
+  .admin-wish__actions button { font-size: 11px; }
+}
