@@ -443,11 +443,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 @media (min-width: 1024px) {
   .invitation-hero--framed { min-height: 720px; padding: 82px clamp(60px, 8vw, 130px) 112px; }
-  .invitation-hero--framed .hero-content { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); grid-template-areas: "label label" "frame names"; align-items: center; gap: 22px clamp(55px, 8vw, 125px); width: min(100%, 1180px); }
+  .invitation-hero--framed .hero-content { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "label" "frame"; align-items: center; gap: 22px; width: min(100%, 760px); }
   .invitation-hero--framed .section-label { grid-area: label; align-self: end; }
-  .invitation-hero--framed .hero-frame-wrap { grid-area: frame; justify-self: end; width: min(100%, 560px); }
-  .invitation-hero--framed .hero-framed-copy { grid-area: names; justify-self: start; width: 100%; text-align: center; }
-  .invitation-hero--framed .hero-framed-copy .hero-names { font-size: clamp(86px, 9vw, 142px); }
+  .invitation-hero--framed .hero-frame-wrap { grid-area: frame; justify-self: center; width: min(100%, clamp(460px, 36vw, 560px)); }
+  .invitation-hero--framed .hero-framed-copy { position: absolute; inset: 0; grid-area: auto; justify-self: auto; align-self: auto; width: auto; padding: 8% 17% 8%; text-align: center; }
+  .invitation-hero--framed .hero-framed-copy .hero-names { font-size: clamp(78px, 8vw, 126px); }
   .invitation-hero--framed .hero-framed-copy .hero-names i { margin: 16px 0 12px; }
 
   .moments-section .section-intro { max-width: 760px; }

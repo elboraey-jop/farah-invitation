@@ -317,9 +317,11 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
           <div className="hero-flower hero-flower--right" aria-hidden="true" />
           <div className="hero-content">
             <p className="section-label opening-sequence opening-sequence--label">{activeCopy.welcome}</p>
-            <div className="hero-frame-wrap opening-sequence opening-sequence--frame"><img className="hero-frame" src="/assets/decor/frame-1-ribbon-cutout-hq.webp" alt="" aria-hidden="true" loading="eager" decoding="async" /></div>
-            <div className="hero-framed-copy opening-sequence opening-sequence--names">
-              <h2 className="hero-names"><span>{activeCopy.brideName}</span><i>{activeCopy.nameConnector}</i><span>{activeCopy.groomName}</span></h2>
+            <div className="hero-frame-wrap opening-sequence opening-sequence--frame">
+              <img className="hero-frame" src="/assets/decor/frame-1-ribbon-cutout-hq.webp" alt="" aria-hidden="true" loading="eager" decoding="async" />
+              <div className="hero-framed-copy opening-sequence opening-sequence--names">
+                <h2 className="hero-names"><span>{activeCopy.brideName}</span><i>{activeCopy.nameConnector}</i><span>{activeCopy.groomName}</span></h2>
+              </div>
             </div>
           </div>
         </section>
