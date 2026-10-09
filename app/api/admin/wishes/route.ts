@@ -4,10 +4,15 @@ import { getSupabaseAdmin, getSupabasePublic } from "@/lib/supabase";
 async function authorize(request: Request) {
   const token = request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
   const supabase = getSupabasePublic();
-  if (!token || !supabase) return false;
+  const configuredAdminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  if (!token || !supabase || !configuredAdminEmail) return false;
 
-  const { data } = await supabase.auth.getUser(token);
-  return Boolean(data.user && data.user.email === (process.env.ADMIN_EMAIL || "admin@example.com"));
+  try {
+    const { data } = await supabase.auth.getUser(token);
+    return data.user?.email?.trim().toLowerCase() === configuredAdminEmail;
+  } catch {
+    return false;
+  }
 }
 
 export async function GET(request: Request) {
@@ -27,8 +32,15 @@ export async function PATCH(request: Request) {
   const supabase = getSupabaseAdmin();
   if (!supabase) return NextResponse.json({ error: "Admin backend is not configured yet." }, { status: 503 });
 
-  const body = (await request.json()) as { id?: string; status?: "unread" | "read" | "archived" };
-  if (!body.id || !body.status) return NextResponse.json({ error: "Invalid update." }, { status: 400 });
+  let body: { id?: string; status?: "unread" | "read" | "archived" };
+  try {
+    body = (await request.json()) as { id?: string; status?: "unread" | "read" | "archived" };
+  } catch {
+    return NextResponse.json({ error: "Invalid update." }, { status: 400 });
+  }
+  if (!body.id || !body.status || !["unread", "read", "archived"].includes(body.status)) {
+    return NextResponse.json({ error: "Invalid update." }, { status: 400 });
+  }
 
   const { error } = await supabase.from("wishes").update({ status: body.status }).eq("id", body.id);
   if (error) return NextResponse.json({ error: "Unable to update wish." }, { status: 500 });
