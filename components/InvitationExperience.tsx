@@ -8,6 +8,7 @@ type InvitationData = typeof invitation;
 const immediateDecorationAssets = [
   "/assets/decor/frame-1-cutout.png",
   "/assets/decor/gallery-continuation-cutout.png",
+  "/assets/decor/location-wishes-divider.png",
   "/assets/music/music-disc.png",
 ];
 
@@ -57,6 +58,8 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
   const [wish, setWish] = useState({ name: "", message: "" });
   const [wishStatus, setWishStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const audioRef = useRef<HTMLAudioElement>(null);
+  const audioObjectUrlRef = useRef<string | null>(null);
+  const audioPreparationRef = useRef<Promise<string> | null>(null);
   const decorationsPreloaded = useRef(false);
 
   function ensureDecorationAssets() {
@@ -68,6 +71,65 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
   useEffect(() => {
     ensureDecorationAssets();
   }, []);
+
+  function prepareMusic() {
+    if (audioObjectUrlRef.current) return Promise.resolve(audioObjectUrlRef.current);
+    if (audioPreparationRef.current) return audioPreparationRef.current;
+
+    const preparation = fetch("/api/music", {
+      method: "POST",
+      cache: "no-store",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load music");
+        return response.json() as Promise<{ data: string; mimeType: string }>;
+      })
+      .then(({ data, mimeType }) => {
+        const binary = atob(data);
+        const bytes = new Uint8Array(binary.length);
+        for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+        const objectUrl = URL.createObjectURL(new Blob([bytes], { type: mimeType }));
+        audioObjectUrlRef.current = objectUrl;
+        if (audioRef.current) audioRef.current.src = objectUrl;
+        return objectUrl;
+      });
+
+    audioPreparationRef.current = preparation.catch((error) => {
+      audioPreparationRef.current = null;
+      throw error;
+    });
+    return audioPreparationRef.current;
+  }
+
+  async function startMusic() {
+    const audio = audioRef.current;
+    if (!audio) return false;
+    try {
+      const objectUrl = audioObjectUrlRef.current ?? await prepareMusic();
+      if (audio.src !== objectUrl) audio.src = objectUrl;
+      await audio.play();
+      setMusicPlaying(true);
+      return true;
+    } catch {
+      setMusicPlaying(false);
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    let cancelled = false;
+    void prepareMusic().then(() => {
+      if (!cancelled) void startMusic();
+    }).catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+      audioRef.current?.pause();
+      if (audioObjectUrlRef.current) URL.revokeObjectURL(audioObjectUrlRef.current);
+      audioObjectUrlRef.current = null;
+      audioPreparationRef.current = null;
+    };
+  }, [invitation.music]);
 
   useEffect(() => {
     setTimeLeft(getTimeLeft(invitation.date));
@@ -94,21 +156,17 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
   async function toggleMusic() {
     const audio = audioRef.current;
     if (!audio) return;
-    if (musicPlaying) {
+    if (!audio.paused) {
       audio.pause();
       setMusicPlaying(false);
       return;
     }
-    try {
-      await audio.play();
-      setMusicPlaying(true);
-    } catch {
-      setMusicPlaying(false);
-    }
+    await startMusic();
   }
 
   function openInvitation() {
     if (opened) return;
+    void startMusic();
     ensureDecorationAssets();
     setOpened(true);
     window.setTimeout(() => {
@@ -137,7 +195,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
 
   return (
     <main className="invitation-shell">
-      <audio ref={audioRef} src={invitation.music} loop preload="none" />
+      <audio ref={audioRef} loop preload="none" />
 
       {coverVisible && (
         <section className={`cover ${opened ? "cover--opened" : ""}`} aria-label="Wedding invitation cover">
@@ -161,9 +219,9 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
           <div className="hero-flower hero-flower--left" aria-hidden="true" />
           <div className="hero-flower hero-flower--right" aria-hidden="true" />
           <div className="hero-content">
-            <p className="section-label">Welcome to our wedding</p>
-            <div className="hero-frame-wrap"><img className="hero-frame" src="/assets/decor/frame-1-cutout.png" alt="" aria-hidden="true" loading="eager" decoding="async" /></div>
-            <div className="hero-framed-copy">
+            <p className="section-label opening-sequence opening-sequence--label">Welcome to our wedding</p>
+            <div className="hero-frame-wrap opening-sequence opening-sequence--frame"><img className="hero-frame" src="/assets/decor/frame-1-cutout.png" alt="" aria-hidden="true" loading="eager" decoding="async" /></div>
+            <div className="hero-framed-copy opening-sequence opening-sequence--names">
               <h2 className="hero-names"><span>{invitation.bride}</span><i>&amp;</i><span>{invitation.groom}</span></h2>
             </div>
           </div>
@@ -171,11 +229,11 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
 
         <section id="moments" className="moments-section">
           <div className="moments-section__continuation" aria-hidden="true" />
-          <div className="section-intro section-intro--center">
+          <div className="section-intro section-intro--center opening-sequence opening-sequence--moments-intro">
             <p className="section-label">A little preview</p>
             <h3>Moments to<br /><i>keep forever.</i></h3>
           </div>
-          <div className="moments-grid">
+          <div className="moments-grid opening-sequence opening-sequence--moments-grid">
             {invitation.gallery.slice(0, 2).map((photo, index) => <figure className="moment-card" key={photo.src}><img src={photo.src} alt={photo.alt} loading="eager" fetchPriority="high" decoding="async" /><figcaption><span>0{index + 1}</span> A memory in the making</figcaption></figure>)}
           </div>
         </section>
@@ -209,6 +267,10 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
           </div>
         </section>
 
+        <div className="floral-section-divider" aria-hidden="true">
+          <img src="/assets/decor/location-wishes-divider.png" alt="" loading="lazy" decoding="async" />
+        </div>
+
         <section id="venue" className="venue-section" data-reveal="up">
           <div className="venue-section__frame" aria-hidden="true" />
           <div className="venue-card">
@@ -217,10 +279,14 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
               <p className="section-label">The setting</p>
               <h3>Meet us at<br /><i>{invitation.venue}</i></h3>
               <p>Find your way to the place where our forever starts. We cannot wait to celebrate with you.</p>
-              <a className="button button--outline" href={invitation.venueUrl} target="_blank" rel="noreferrer">Open in Google Maps <span>↗</span></a>
+              <a className="button button--outline" href={invitation.venueUrl} target="_blank" rel="noreferrer">Open in Google Maps</a>
             </div>
           </div>
         </section>
+
+        <div className="floral-section-divider" aria-hidden="true">
+          <img src="/assets/decor/location-wishes-divider.png" alt="" loading="lazy" decoding="async" />
+        </div>
 
         <section id="wishes" className="wishes-section" data-reveal="up">
           <div className="wishes-section__flower" aria-hidden="true" />
@@ -229,7 +295,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
           <form className="wish-form" onSubmit={submitWish}>
             <label><span>Your name</span><input required maxLength={80} value={wish.name} onChange={(event) => setWish({ ...wish, name: event.target.value })} placeholder="How should we remember you?" /></label>
             <label className="wish-field--message"><span>Your message</span><textarea className="wish-textarea" required maxLength={500} value={wish.message} onChange={(event) => setWish({ ...wish, message: event.target.value })} placeholder="Write something from the heart..." rows={3} /></label>
-            <button className="button button--primary" disabled={wishStatus === "sending"}>{wishStatus === "sending" ? "Sending..." : "Send your wishes"}<span>↗</span></button>
+            <button className="button button--primary" disabled={wishStatus === "sending"}>{wishStatus === "sending" ? "Sending..." : "Send your wishes"}</button>
             {wishStatus === "sent" && <p className="form-status form-status--success">Your wishes have been sent privately.</p>}
             {wishStatus === "error" && <p className="form-status form-status--error">The inbox is not connected yet. Please try again later.</p>}
           </form>

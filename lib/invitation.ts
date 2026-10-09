@@ -6,7 +6,7 @@ export const invitation = {
   time: "8:00 PM",
   venue: "Qasr Hall",
   venueUrl: "https://maps.app.goo.gl/teZFMRcaYmbSkw8d9",
-  music: "/assets/music/placeholder.wav",
+  music: "/assets/music/farh-music.mp3",
   gallery: [
     { src: "/assets/placeholders/gallery-01.svg", alt: "Wedding photo placeholder" },
     { src: "/assets/placeholders/gallery-02.svg", alt: "Wedding photo placeholder" },
