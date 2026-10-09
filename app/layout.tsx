@@ -17,6 +17,24 @@ const dmSans = localFont({
   display: "swap",
 });
 
+const cairo = localFont({
+  src: [
+    { path: "./fonts/cairo-arabic-regular.ttf", weight: "400" },
+    { path: "./fonts/cairo-arabic-semibold.ttf", weight: "600" },
+  ],
+  variable: "--font-cairo",
+  display: "swap",
+});
+
+const amiri = localFont({
+  src: [
+    { path: "./fonts/amiri-arabic-regular.ttf", weight: "400" },
+    { path: "./fonts/amiri-arabic-bold.ttf", weight: "700" },
+  ],
+  variable: "--font-amiri",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Farah & Karim | Wedding Invitation",
   description: "A celebration of love, togetherness, and a beautiful beginning.",
@@ -24,7 +42,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
+    <html lang="en" dir="ltr" className={`${cormorant.variable} ${dmSans.variable} ${cairo.variable} ${amiri.variable}`}>
       <body>{children}</body>
     </html>
   );

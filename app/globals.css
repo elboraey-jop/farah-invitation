@@ -582,6 +582,273 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .admin-wish__actions button { font-size: 11px; }
 }
 
+/* Language switcher and Arabic editorial system */
+.language-switcher {
+  position: relative;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 68px;
+  min-height: 38px;
+  gap: 7px;
+  padding: 0 11px;
+  border: 1px solid rgba(111,38,56,.22);
+  border-radius: 999px;
+  background: rgba(255,253,249,.72);
+  color: var(--wine);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+.language-switcher__globe {
+  display: grid;
+  width: 19px;
+  height: 19px;
+  place-items: center;
+  color: var(--gold);
+}
+.language-switcher__globe svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.25;
+}
+.language-switcher:hover,
+.language-switcher:focus-visible {
+  border-color: var(--gold);
+  background: #fffdf9;
+  box-shadow: 0 8px 20px rgba(111,38,56,.12);
+  transform: translateY(-2px);
+}
+.language-switcher--cover {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+}
+.language-switcher--floating {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 40;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-cairo), Tahoma, sans-serif;
+  font-kerning: normal;
+}
+html[dir="rtl"] .invitation-content,
+html[dir="rtl"] .cover {
+  direction: rtl;
+}
+html[dir="rtl"] h3,
+html[dir="rtl"] .promise-card blockquote,
+html[dir="rtl"] .hero-message,
+html[dir="rtl"] .reception-time,
+html[dir="rtl"] .reception-year,
+html[dir="rtl"] .calendar-month {
+  font-family: var(--font-amiri), Georgia, serif;
+  letter-spacing: 0;
+}
+html[dir="rtl"] .eyebrow,
+html[dir="rtl"] .section-label,
+html[dir="rtl"] .cover__intro,
+html[dir="rtl"] .cover__date,
+html[dir="rtl"] .reception-subtitle,
+html[dir="rtl"] .reception-date-row span,
+html[dir="rtl"] .calendar-grid--head,
+html[dir="rtl"] .button,
+html[dir="rtl"] .language-switcher,
+html[dir="rtl"] .invitation-header nav a {
+  letter-spacing: 0;
+  text-transform: none;
+}
+html[dir="rtl"] .cover h1,
+html[dir="rtl"] .hero-names {
+  direction: ltr;
+  font-family: var(--font-amiri), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+html[dir="rtl"] .cover__date {
+  font-family: var(--font-cairo), Tahoma, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 9px;
+}
+html[dir="rtl"] .reception-venue {
+  font-family: var(--font-amiri), Georgia, serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+html[dir="rtl"] .reception-info h3 i,
+html[dir="rtl"] .venue-card__copy h3 i {
+  display: inline-block;
+  margin-top: .14em;
+}
+html[dir="rtl"] .venue-card__copy h3 i {
+  margin-top: .26em;
+}
+html[dir="rtl"] .hero-framed-copy .hero-names {
+  letter-spacing: 0;
+}
+html[dir="rtl"] .hero-framed-copy .hero-names i {
+  display: grid;
+  width: 1.15em;
+  height: 1em;
+  place-items: center;
+  margin: .28em 0 .2em;
+  color: var(--gold);
+  font-family: var(--font-amiri), Georgia, serif;
+  font-size: .35em;
+  font-style: normal;
+  line-height: 1;
+}
+html[dir="rtl"] .hero-framed-copy .hero-names > span:first-of-type {
+  transform: translateY(-.28em);
+}
+html[dir="rtl"] .hero-framed-copy .hero-names > span:last-of-type {
+  transform: translateY(.12em);
+}
+html[dir="rtl"] .details-section,
+html[dir="rtl"] .venue-card,
+html[dir="rtl"] .wishes-section,
+html[dir="rtl"] .promise-section {
+  direction: rtl;
+}
+html[dir="rtl"] .reception-date-row span:first-child,
+html[dir="rtl"] .reception-date-row span:last-child {
+  text-align: center;
+}
+html[dir="rtl"] .venue-card__copy,
+html[dir="rtl"] .wishes-section,
+html[dir="rtl"] .wishes-intro,
+html[dir="rtl"] .promise-card {
+  text-align: right;
+}
+html[dir="rtl"] .wishes-section,
+html[dir="rtl"] .promise-section {
+  justify-items: stretch;
+}
+html[dir="rtl"] .wishes-intro,
+html[dir="rtl"] .promise-card {
+  margin-right: 0;
+  margin-left: auto;
+}
+html[dir="rtl"] .wishes-intro > p:last-child,
+html[dir="rtl"] .venue-card__copy > p:last-of-type {
+  margin-right: 0;
+  margin-left: 0;
+}
+html[dir="rtl"] .wishes-intro {
+  width: min(100%, 520px);
+  text-align: center;
+}
+html[dir="rtl"] .wishes-intro h3,
+html[dir="rtl"] .wishes-intro > p:last-child {
+  text-align: center;
+}
+html[dir="rtl"] .promise-card {
+  text-align: center;
+}
+html[dir="rtl"] .wish-form {
+  text-align: right;
+}
+html[dir="rtl"] .wish-form label {
+  justify-items: stretch;
+}
+html[dir="rtl"] .wish-form label > span {
+  text-align: right;
+}
+html[dir="rtl"] .wish-form input,
+html[dir="rtl"] .wish-form textarea {
+  direction: rtl;
+  text-align: right;
+}
+html[dir="rtl"] .wish-form input::placeholder,
+html[dir="rtl"] .wish-form textarea::placeholder {
+  text-align: right;
+}
+html[dir="rtl"] .wish-form .button,
+html[dir="rtl"] .form-status {
+  justify-self: center;
+  text-align: center;
+}
+html[dir="rtl"] .venue-card__copy .button {
+  align-self: flex-start;
+}
+html[dir="rtl"] .music-disc {
+  right: auto;
+  left: 15px;
+}
+
+@media (min-width: 720px) {
+  html[dir="rtl"] .reception-info,
+  html[dir="rtl"] .reception-calendar {
+    text-align: right;
+  }
+  html[dir="rtl"] .reception-date-row {
+    margin-right: 0;
+    margin-left: auto;
+  }
+  html[dir="rtl"] .reception-subtitle,
+  html[dir="rtl"] .reception-countdown {
+    text-align: right;
+  }
+  html[dir="rtl"] .venue-card__copy {
+    align-items: flex-start;
+    text-align: right;
+  }
+  html[dir="rtl"] .wishes-section {
+    text-align: right;
+  }
+}
+
+@media (max-width: 520px) {
+  .language-switcher--cover {
+    top: 13px;
+    left: 13px;
+    min-width: 64px;
+    min-height: 33px;
+    padding: 0 12px;
+    font-size: 10px;
+  }
+  .language-switcher--floating {
+    top: 13px;
+    left: 13px;
+    min-width: 64px;
+  }
+  html[dir="rtl"] .cover__date {
+    margin-bottom: 0;
+  }
+  html[dir="rtl"] .cover__open-button,
+  html[dir="rtl"] .cover__open-button:hover,
+  html[dir="rtl"] .cover__open-button:focus-visible,
+  html[dir="rtl"] .cover__open-button:active {
+    transform: translateY(20px);
+  }
+  html[dir="rtl"] .cover__open-button {
+    position: relative;
+    top: -10px;
+  }
+  html[dir="rtl"] .music-disc {
+    left: 12px;
+  }
+}
+
+/* The language control lives once at page level; legacy in-panel copies stay hidden. */
+.cover .language-switcher--cover,
+.invitation-content > .language-switcher--floating {
+  display: none !important;
+}
+
 /* Custom sort menu */
 .admin-sort { position: relative; }
 .admin-sort__trigger { display: inline-flex; align-items: center; justify-content: space-between; gap: 18px; min-width: 145px; min-height: 42px; padding: 0 12px 0 14px; border: 1px solid rgba(111,38,56,.2); border-radius: 12px; background: linear-gradient(145deg, rgba(255,255,255,.9), rgba(247,238,231,.88)); color: var(--wine); cursor: pointer; font: inherit; font-size: 11px; text-align: left; box-shadow: 0 5px 0 rgba(189,150,90,.12); transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
