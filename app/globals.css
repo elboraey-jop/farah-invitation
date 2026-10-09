@@ -72,7 +72,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .promise-section { position: relative; display: grid; place-items: center; min-height: 560px; padding: 78px 20px; overflow: hidden; background: var(--wine-deep); }.promise-section__vine, .promise-section__rose { position: absolute; background: url('/assets/decor/vine-corner.webp') center/contain no-repeat; opacity: .22; filter: sepia(.25) saturate(.7); }.promise-section__vine { top: -80px; left: -150px; width: 370px; height: 530px; transform: rotate(-16deg); }.promise-section__rose { right: -100px; bottom: -100px; width: 310px; height: 380px; background-image: url('/assets/decor/rose-corner.webp'); transform: rotate(170deg); }.promise-card { position: relative; z-index: 1; width: min(100%, 590px); padding: 45px 27px; border: 1px solid rgba(255,244,230,.28); background: rgba(255,253,249,.06); text-align: center; }.promise-card .section-label { color: #e5bf81; }.promise-card blockquote { margin: 25px auto 22px; color: #fff8ed; font: italic 500 clamp(31px, 10vw, 50px)/.98 var(--font-cormorant), serif; }.promise-card > span { display: block; width: 44px; height: 1px; margin: 0 auto 20px; background: var(--gold); }.promise-card > p:last-child { max-width: 350px; margin: 0 auto; color: #dfc5be; font: 17px/1.55 var(--font-cormorant), serif; }
 
 /* Moments */
-.moments-section { background: var(--paper); }.section-intro--center { margin: 0 auto; text-align: center; }.moments-grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; gap: 10px; max-width: 1000px; margin: 48px auto 0; }.moment-card { position: relative; margin: 0; overflow: hidden; border-radius: 16px; background: var(--paper-deep); border: 1px solid rgba(111,38,56,.12); }.moment-card--1 { grid-row: span 2; }.moment-card--4 { grid-column: span 2; }.moment-card img { width: 100%; height: 100%; object-fit: cover; opacity: .92; transition: transform .65s cubic-bezier(.16,1,.3,1); }.moment-card:hover img { transform: scale(1.06); }.moment-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(43,19,26,.48)); pointer-events: none; }.moment-card figcaption { position: absolute; z-index: 1; left: 13px; bottom: 12px; color: #fffaf2; font-size: 8px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }.moment-card figcaption span { margin-right: 7px; color: #e2bf81; font: 600 17px var(--font-cormorant), serif; }
+.moments-section { background: var(--paper); }.section-intro--center { margin: 0 auto; text-align: center; }.moments-grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; gap: 10px; max-width: 1000px; margin: 48px auto 0; }.moment-card { position: relative; margin: 0; overflow: hidden; border-radius: 16px; background: var(--paper-deep); border: 1px solid rgba(111,38,56,.12); }.moment-card--1 { grid-row: span 2; }.moment-card--4 { grid-column: span 2; }.moment-card img { display: block; width: 100%; height: 100%; object-fit: cover; opacity: .92; transition: transform .65s cubic-bezier(.16,1,.3,1); }.moment-card:hover img { transform: scale(1.06); }.moment-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(43,19,26,.58)); pointer-events: none; }.moment-card figcaption { position: absolute; z-index: 1; left: 13px; right: 13px; bottom: 12px; color: #fffaf2; font-size: 8px; font-weight: 500; letter-spacing: .12em; line-height: 1.35; text-transform: uppercase; }.moment-card figcaption span { display: inline-block; margin-right: 7px; color: #e2bf81; font: 600 17px var(--font-cormorant), serif; vertical-align: middle; }.moment-card figcaption strong { display: inline; font: inherit; }
 
 /* Countdown */
 .countdown-section { position: relative; padding: 92px 20px; overflow: hidden; text-align: center; color: #fff9f1; background: linear-gradient(135deg, #4f1a2a, #74283c 58%, #5b1d2e); }.countdown-section__texture { position: absolute; inset: 0; background: url('/assets/backgrounds/paper-texture.webp') center/cover; opacity: .08; mix-blend-mode: screen; }.countdown-section .section-label { position: relative; color: #e4bd7c; }.countdown-section h3 { position: relative; margin: 14px auto 0; font: 600 clamp(48px, 14vw, 82px)/.82 var(--font-cormorant), serif; letter-spacing: -.06em; }.countdown-section h3 i { display: block; }.countdown-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; max-width: 600px; margin: 48px auto 0; border-top: 1px solid rgba(255,248,238,.28); border-left: 1px solid rgba(255,248,238,.28); }.countdown-grid div { display: grid; gap: 7px; padding: 23px 7px; border-right: 1px solid rgba(255,248,238,.28); border-bottom: 1px solid rgba(255,248,238,.28); }.countdown-grid strong { font: 500 clamp(47px, 15vw, 74px)/1 var(--font-cormorant), serif; }.countdown-grid span { color: #e5bd7d; font-size: 8px; font-weight: 600; letter-spacing: .17em; text-transform: uppercase; }
@@ -151,12 +151,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .moments-section .section-intro h3 i { color: var(--wine-soft); }
 .moments-section__continuation { position: absolute; top: -2px; right: 0; z-index: 0; width: 100%; height: 342px; background: url('/assets/decor/gallery-continuation-cutout.webp') top right/100% auto no-repeat; opacity: .12; mix-blend-mode: multiply; filter: none; pointer-events: none; }
 .moments-section .section-intro, .moments-section .moments-grid { position: relative; z-index: 1; }
-.moments-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: 220px; }
+.moments-grid { width: min(100%, 920px); grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: auto; }
 .moments-grid .moment-card { grid-column: auto; grid-row: auto; }
+.moment-card { aspect-ratio: 3 / 4; }
 
 @media (min-width: 720px) {
   .moments-section__continuation { top: -2px; right: 0; width: 100%; height: 432px; background-size: 100% auto; opacity: .12; }
-  .moments-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 340px; grid-auto-rows: 340px; }
+  .moments-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: auto; }
 }
 
 /* Reception details inspired by the reference card */
@@ -199,7 +200,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 @media (max-width: 719px) {
   .moments-section { padding-top: 66px; padding-bottom: 56px; }
-  .moments-grid { margin-top: 32px; }
+  .moments-grid { width: 100%; gap: 8px; margin-top: 32px; }
+  .moment-card { border-radius: 12px; }
+  .moment-card figcaption { left: 9px; right: 9px; bottom: 9px; font-size: 7px; letter-spacing: .08em; }
+  .moment-card figcaption span { margin-right: 5px; font-size: 15px; }
   .details-section { padding-bottom: 28px; }
 }
 
@@ -398,7 +402,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
   .moments-section { padding: 138px clamp(60px, 9vw, 150px) 150px; }
   .moments-section .section-intro h3 { font-size: clamp(68px, 7vw, 104px); }
-  .moments-grid { width: min(100%, 1120px); grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(300px, 390px)); gap: 22px; margin-top: 70px; }
+  .moments-grid { width: min(100%, 920px); grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: auto; gap: 22px; margin-top: 70px; }
   .moment-card { border-radius: 22px; }
   .moment-card figcaption { left: 20px; bottom: 18px; font-size: 9px; }
 
@@ -435,7 +439,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .invitation-hero--framed { min-height: 860px; }
   .invitation-hero--framed .hero-content { width: min(100%, 720px); }
   .invitation-hero--framed .hero-frame-wrap { width: min(100%, 650px); }
-  .moments-grid { grid-template-rows: repeat(2, 430px); }
+  .moments-grid { grid-template-rows: none; grid-auto-rows: auto; }
   .details-section { grid-template-columns: minmax(430px, .9fr) minmax(520px, 1fr); }
   .venue-card { grid-template-columns: minmax(0, 1.2fr) minmax(360px, .8fr); }
   .wishes-section { grid-template-columns: minmax(360px, .75fr) minmax(540px, 1fr); }
@@ -451,7 +455,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .invitation-hero--framed .hero-framed-copy .hero-names i { margin: 16px 0 12px; }
 
   .moments-section .section-intro { max-width: 760px; }
-  .moments-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 390px; }
+  .moments-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: auto; }
 
   .details-section { padding-top: 128px; padding-bottom: 138px; }
   .venue-section { padding-top: 120px; padding-bottom: 132px; }
@@ -915,6 +919,18 @@ html[dir="rtl"] .hero-framed-copy .hero-names > span:first-of-type {
 }
 html[dir="rtl"] .hero-framed-copy .hero-names > span:last-of-type {
   transform: translateY(.12em);
+}
+html[dir="rtl"] .moment-card figcaption {
+  direction: rtl;
+  font-family: var(--font-cairo), Tahoma, sans-serif;
+  letter-spacing: 0;
+  text-align: right;
+  text-transform: none;
+}
+html[dir="rtl"] .moment-card figcaption span {
+  margin-right: 0;
+  margin-left: 7px;
+  font-family: var(--font-amiri), Georgia, serif;
 }
 html[dir="rtl"] .details-section,
 html[dir="rtl"] .venue-card,

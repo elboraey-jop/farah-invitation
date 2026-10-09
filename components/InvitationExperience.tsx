@@ -19,7 +19,6 @@ const copy = {
     welcome: "Welcome to our wedding",
     momentsLabel: "A little preview",
     momentsTitle: <>Moments to<br /><i>keep forever.</i></>,
-    memory: "A memory in the making",
     receptionInfo: "Reception info",
     receptionTitle: <>The reception<br /><i>will take place at:</i></>,
     reception: "Reception",
@@ -63,7 +62,6 @@ const copy = {
     welcome: "نرحّب بكم في حفل زفافنا",
     momentsLabel: "لمحة من لحظاتنا",
     momentsTitle: <>لحظات<br /><i>تبقى معنا للأبد.</i></>,
-    memory: "ذكرى نُشكّلها معًا",
     receptionInfo: "تفاصيل الحفل",
     receptionTitle: <>نلتقي في الحفل<br /><i>الذي سيقام في:</i></>,
     reception: "الحفل",
@@ -333,7 +331,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
             <h3>{activeCopy.momentsTitle}</h3>
           </div>
           <div className="moments-grid opening-sequence opening-sequence--moments-grid">
-            {invitation.gallery.slice(0, 2).map((photo, index) => <figure className="moment-card" key={photo.src}><img src={photo.src} alt={language === "ar" ? "صورة من أجواء الزفاف" : photo.alt} loading="lazy" decoding="async" /><figcaption><span>{formatNumber(index + 1, language, 2)}</span> {activeCopy.memory}</figcaption></figure>)}
+            {invitation.gallery.slice(0, 2).map((photo, index) => <figure className="moment-card" key={photo.src}><img src={photo.src} alt={language === "ar" ? "صورة من أجواء الزفاف" : photo.alt} loading="lazy" decoding="async" /><figcaption><span>{formatNumber(index + 1, language, 2)}</span><strong>{photo.caption[language]}</strong></figcaption></figure>)}
           </div>
         </section>
         </div>

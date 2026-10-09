@@ -8,10 +8,16 @@ export const invitation = {
   venueUrl: "https://maps.app.goo.gl/teZFMRcaYmbSkw8d9",
   music: "/assets/music/farh-music.mp3",
   gallery: [
-    { src: "/assets/placeholders/gallery-01.svg", alt: "Wedding photo placeholder" },
-    { src: "/assets/placeholders/gallery-02.svg", alt: "Wedding photo placeholder" },
-    { src: "/assets/placeholders/gallery-03.svg", alt: "Wedding photo placeholder" },
-    { src: "/assets/placeholders/gallery-04.svg", alt: "Wedding photo placeholder" },
+    {
+      src: "/assets/gallery/farah-karim-certificate.webp",
+      alt: "Farah and Karim holding their wedding certificate",
+      caption: { en: "Our new beginning", ar: "بداية حكايتنا الجديدة" },
+    },
+    {
+      src: "/assets/gallery/farah-karim-together.webp",
+      alt: "Farah and Karim smiling together",
+      caption: { en: "Together, always", ar: "معًا دائمًا" },
+    },
   ],
 } as const;
 
