@@ -1,7 +1,7 @@
 :root { --paper: #f7f1e9; --paper-bright: #fffdf9; --paper-deep: #ead9cb; --ink: #37262c; --muted: #8c7470; --wine: #6f2638; --wine-deep: #461725; --wine-soft: #a85f69; --gold: #bd965a; --line: rgba(111,38,56,.18); --shadow: 0 22px 60px rgba(63,28,36,.14); }
 * { box-sizing: border-box; }
-html { min-height: 100%; overflow-x: hidden; scroll-behavior: smooth; background: var(--paper); overscroll-behavior-y: none; }
-body { min-width: 0; min-height: 100%; margin: 0; overflow-x: hidden; background: var(--paper); color: var(--ink); font-family: var(--font-dm-sans), sans-serif; overscroll-behavior-y: none; }
+html { min-height: 100%; scroll-behavior: smooth; background: var(--paper); }
+body { min-width: 0; min-height: 100%; margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-dm-sans), sans-serif; }
 button, input, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
