@@ -11,7 +11,7 @@ const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supa
 
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [email, setEmail] = useState("admin@example.com");
+  const [email, setEmail] = useState("farah@admin.com");
   const [password, setPassword] = useState("");
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [error, setError] = useState("");
